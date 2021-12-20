@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CoreServicesService } from './services/Core/core-services.service';
-import { ICoreComment, ICoreStory } from './services/Core/core.models';
+import { CoreServicesService } from './services/CoreServices/core-services.service';
+import { ICoreComment, ICoreStory } from './services/CoreServices/core.models';
 
 @Component({
   selector: 'app-root',
