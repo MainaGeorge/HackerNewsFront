@@ -1,34 +1,30 @@
 
 <h2>Testing Data API Story</h2>
-<ul *ngIf="ApiStory">
-  <li > {{ ApiStory | json }}</li>
-</ul>
-
-<h2>Testing Data API Story</h2>
-<ul *ngIf="Corestory">
-  <li > {{ Corestory | json }}</li>
+<ul *ngIf="corestory">
+  <li>there are {{corestory?.comments?.length}} comments</li>
+  <li > {{ corestory | json }}</li>
 </ul>
 
 <h2>Testing Data new API Stories</h2>
-<ng-container *ngIf="ApiStories" >
-<ul>
-  <li *ngFor="let story of ApiStories"> {{story | json}} </li>
+<ng-container *ngIf="topStories" >
 
+<ul>
+  <li *ngFor="let story of topStories"> {{story | json}} </li>
 </ul>
 </ng-container>
 
 <h2>Testing Data best API Stories</h2>
-<ng-container *ngIf="BestApiStories" >
+<ng-container *ngIf="bestStories" >
 <ul>
-  <li *ngFor="let story of BestApiStories"> {{story | json}} </li>
+  <li *ngFor="let story of bestStories"> {{story | json}} </li>
 
 </ul>
 </ng-container>
 
 <h2>Testing Data API Comment</h2>
-<ng-container *ngIf="ApiComment" >
+<ng-container *ngIf="apiComment" >
 <ul>
-  <li>{{ ApiComment | json }}</li>
+  <li>{{ apiComment | json }}</li>
 </ul>
 </ng-container>
 

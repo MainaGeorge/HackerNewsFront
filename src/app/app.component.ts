@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { error } from 'protractor';
-import { ApiDataService } from './services/APIService/api-data.service';
-import { IApiComment, IApiStory } from './services/APIService/Api.models';
 import { CoreServicesService } from './services/Core/core-services.service';
-import { ICoreStory } from './services/Core/core.models';
+import { ICoreComment, ICoreStory } from './services/Core/core.models';
 
 @Component({
   selector: 'app-root',
@@ -12,37 +9,28 @@ import { ICoreStory } from './services/Core/core.models';
 })
 export class AppComponent implements OnInit{
   title = 'HNStories';
-  ApiStory: IApiStory | undefined ;
-  Corestory: ICoreStory | undefined;
-  ApiStories: IApiStory[] = [];
-  BestApiStories: IApiStory[] = []
-  ApiComment: IApiComment | undefined;
+  corestory: ICoreStory | undefined;
+  topStories: ICoreStory[] = [];
+  bestStories: ICoreStory[] = []
+  apiComment: ICoreComment | undefined;
 
-  constructor(public apiService: ApiDataService, public coreService: CoreServicesService){}
+  constructor(public coreService: CoreServicesService){}
 
   ngOnInit(): void {
-    this.apiService.getStoryById(8863).subscribe({
-      next: story => this.ApiStory = story,
-      error: error => console.log(error)
-    });
 
-    this.coreService.getStory(8863).subscribe(story => this.Corestory = story, error => console.log(error))
+    this.coreService.getStory(8863)
+    .subscribe(story => {
+      this.corestory = story;
+    }, error => console.log(error))
 
-    this.apiService.getTop5NewStories().subscribe(res => {
-      console.log(res);
-      this.ApiStories = res;
-    }, error => console.log(error));
+    this.coreService.getTop5NewStories("new",1)
+    .subscribe(stories => this.topStories = stories, error => console.log(error));
 
-    this.apiService.getTop5BestStories().subscribe(res => {
-      console.log(res);
-      this.BestApiStories = res;
-    }, error => console.log(error));
+    this.coreService.getTop5NewStories("top",2)
+    .subscribe(stories => this.bestStories = stories, error => console.log(error));
 
-    this.coreService.getTop5NewStories("new").subscribe(stories => console.log(stories), error => console.log(error));
-    this.coreService.getTop5NewStories("top").subscribe(stories => console.log(stories), error => console.log(error));
-
-
-    this.apiService.getCommentById(8873).subscribe(comment => this.ApiComment= comment, error => console.log(error));
+    this.coreService.getCommentById(8873)
+    .subscribe(comment => this.apiComment= comment, error => console.log(error));
 
   }
 }

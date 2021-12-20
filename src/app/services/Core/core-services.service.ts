@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -12,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class CoreServicesService {
 
-  constructor(private http: HttpClient, private apiService: ApiDataService) { }
+  constructor(private apiService: ApiDataService) { }
   private mapApiCommentToCoreComment(apiComment:IApiComment):ICoreComment{
     const coreComment:ICoreComment = {
       id: apiComment.id,
@@ -27,7 +26,6 @@ export class CoreServicesService {
     const coreStory: ICoreStory = {
       id: apisStory.id,
       authorName: apisStory.by,
-      comments: [],
       date: new Date(apisStory.time),
       title: apisStory.title,
       totalPoints: apisStory.score,
@@ -37,17 +35,34 @@ export class CoreServicesService {
     return coreStory
   }
 
+  public getCommentById(commentId:number):Observable<ICoreComment>{
+     return this.apiService.getCommentById(commentId).pipe(
+       map(apiComment => {
+         const coreComment = this.mapApiCommentToCoreComment(apiComment);
+         return coreComment;
+       })
+     )
+  }
+
   public getStory(storyId:number):Observable<ICoreStory>{
     return this.apiService.getStoryById(storyId).pipe(
       map(result => {
         const coreStory = this.mapApiStoryToCoreStory(result);
         if(result.kids){
+          let comments: ICoreComment[] = [];
            result.kids.forEach(entry => {
              this.apiService.getCommentById(entry).subscribe(apiComment => {
                const coreComment = this.mapApiCommentToCoreComment(apiComment);
-               coreStory.comments.push(coreComment);
-             }, error => console.log(error));
-           })
+              comments.push(coreComment);
+             }, error => console.log(error), () => {
+              comments.sort((a,b) => b.id - a.id).slice(0);
+              coreStory.comments = comments.slice(0,5);
+              // console.log(comments.slice(0,5))
+             });
+
+           });
+
+           coreStory.comments = comments
         }
         return coreStory;
       })
@@ -55,9 +70,9 @@ export class CoreServicesService {
   }
 
 
-  public getTop5NewStories(typeOfStory: string):Observable<ICoreStory[]>{
+  public getTop5NewStories(typeOfStory: string, numberOfStories:number):Observable<ICoreStory[]>{
     const url = typeOfStory.toLowerCase() === "new" ? environment.topStoriesUrl : environment.bestStoriesUrl;
-    return this.apiService.getTopStories(url).pipe(
+    return this.apiService.getTopStories(url, numberOfStories).pipe(
       map(resultingArray => {
         const stories:ICoreStory[] = [];
         resultingArray.forEach(storyId => {

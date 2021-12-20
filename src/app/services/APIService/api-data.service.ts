@@ -12,52 +12,15 @@ export class ApiDataService {
 
   constructor(private http:HttpClient) { }
 
-  public getTopStories(url: string):Observable<number[]>{
+  public getTopStories(url: string, numberOfStories:number):Observable<number[]>{
       return this.http.get<number[]>(`${url}`).pipe(
-        map((resultingArray) => resultingArray.slice(0,5))
+        map((resultingArray) => resultingArray.slice(0,numberOfStories+1))
       );
   }
-
 
   public getStoryById(id:number){
     return this.http.get<IApiStory>(`${environment.itemUrl}/${id}.json`);
   }
-
-  private getTop5NewStoriesIds():Observable<number[]>{
-    return this.http.get<number[]>(`${environment.topStoriesUrl}`).pipe(
-      map(resultArray => resultArray.slice(0, 5))
-    );
-  }
-
-  private getTop5PopularStories(): Observable<number[]>{
-    return this.http.get<number[]>(`${environment.bestStoriesUrl}`).pipe(
-      map(resultArray => resultArray.slice(0, 5))
-    );
-  }
-
-  public getTop5NewStories(): Observable<IApiStory[]>{
-     return this.getTop5NewStoriesIds().pipe(
-       map(resultArray => {
-          const stories:IApiStory[] = [];
-          resultArray.forEach(element => {
-              this.getStoryById(element).subscribe(next => stories.push(next), error => console.log(error))
-          });
-          return stories;
-       })
-     )
-  }
-
-  public getTop5BestStories(): Observable<IApiStory[]>{
-    return this.getTop5PopularStories().pipe(
-      map(resultArray => {
-         const stories:IApiStory[] = [];
-         resultArray.forEach(element => {
-             this.getStoryById(element).subscribe(next => stories.push(next), error => console.log(error))
-         });
-         return stories;
-      })
-    )
- }
 
   public getCommentById(id:number):Observable<IApiComment>{
     return this.http.get<IApiComment>(`${environment.itemUrl}/${id}.json`);

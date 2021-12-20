@@ -4,9 +4,10 @@ export interface ICoreComment extends IBaseInterface{
 
 export interface ICoreStory extends IBaseInterface {
   title: string;
-  comments: ICoreComment[]
   totalPoints: number;
   selfUrl: string;
+  comments?: ICoreComment[]
+
 }
 
 export interface IBaseInterface {
