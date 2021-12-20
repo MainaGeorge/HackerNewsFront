@@ -4,6 +4,11 @@
   <li > {{ ApiStory | json }}</li>
 </ul>
 
+<h2>Testing Data API Story</h2>
+<ul *ngIf="Corestory">
+  <li > {{ Corestory | json }}</li>
+</ul>
+
 <h2>Testing Data new API Stories</h2>
 <ng-container *ngIf="ApiStories" >
 <ul>
