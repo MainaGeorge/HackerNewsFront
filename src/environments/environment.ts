@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  baseUrl: 'https://hacker-news.firebaseio.com/v0/item',
+  usersUrl: 'https://hacker-news.firebaseio.com/v0/user',
+  topStoriesUrl: 'https://hacker-news.firebaseio.com/v0/newstories.json'
 };
 
 /*
