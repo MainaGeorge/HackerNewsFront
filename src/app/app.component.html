@@ -1,7 +1,7 @@
 
 <h2>Testing Data API Story</h2>
 <ul *ngIf="ApiStory">
-  <li >{{ ApiStory.by }} {{ApiStory.time}}</li>
+  <li > {{ ApiStory | json }}</li>
 </ul>
 
 <h2>Testing Data API Stories</h2>
@@ -9,6 +9,13 @@
 <ul>
   <li *ngFor="let story of ApiStories"> {{story | json}} </li>
 
+</ul>
+</ng-container>
+
+<h2>Testing Data API Comment</h2>
+<ng-container *ngIf="ApiComment" >
+<ul>
+  <li>{{ ApiComment | json }}</li>
 </ul>
 </ng-container>
 
