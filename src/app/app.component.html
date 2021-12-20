@@ -4,10 +4,18 @@
   <li > {{ ApiStory | json }}</li>
 </ul>
 
-<h2>Testing Data API Stories</h2>
+<h2>Testing Data new API Stories</h2>
 <ng-container *ngIf="ApiStories" >
 <ul>
   <li *ngFor="let story of ApiStories"> {{story | json}} </li>
+
+</ul>
+</ng-container>
+
+<h2>Testing Data best API Stories</h2>
+<ng-container *ngIf="BestApiStories" >
+<ul>
+  <li *ngFor="let story of BestApiStories"> {{story | json}} </li>
 
 </ul>
 </ng-container>

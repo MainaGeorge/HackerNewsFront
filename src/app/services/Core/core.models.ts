@@ -14,3 +14,6 @@ export interface IBaseInterface {
   date: Date;
   id:number;
 }
+
+
+

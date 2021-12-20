@@ -12,6 +12,7 @@ export class AppComponent implements OnInit{
   title = 'HNStories';
   ApiStory: IApiStory | undefined ;
   ApiStories: IApiStory[] = [];
+  BestApiStories: IApiStory[] = []
   ApiComment: IApiComment | undefined;
 
   constructor(public apiService: ApiDataService){}
@@ -27,6 +28,12 @@ export class AppComponent implements OnInit{
       this.ApiStories = res;
     }, error => console.log(error));
 
+    this.apiService.getTop5BestStories().subscribe(res => {
+      console.log(res);
+      this.BestApiStories = res;
+    }, error => console.log(error));
+
     this.apiService.getCommentById(8873).subscribe(comment => this.ApiComment= comment, error => console.log(error));
+
   }
 }
