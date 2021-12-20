@@ -38,6 +38,10 @@ export class AppComponent implements OnInit{
       this.BestApiStories = res;
     }, error => console.log(error));
 
+    this.coreService.getTop5NewStories("new").subscribe(stories => console.log(stories), error => console.log(error));
+    this.coreService.getTop5NewStories("top").subscribe(stories => console.log(stories), error => console.log(error));
+
+
     this.apiService.getCommentById(8873).subscribe(comment => this.ApiComment= comment, error => console.log(error));
 
   }

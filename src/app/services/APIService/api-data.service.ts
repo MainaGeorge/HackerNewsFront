@@ -12,6 +12,13 @@ export class ApiDataService {
 
   constructor(private http:HttpClient) { }
 
+  public getTopStories(url: string):Observable<number[]>{
+      return this.http.get<number[]>(`${url}`).pipe(
+        map((resultingArray) => resultingArray.slice(0,5))
+      );
+  }
+
+
   public getStoryById(id:number){
     return this.http.get<IApiStory>(`${environment.itemUrl}/${id}.json`);
   }
