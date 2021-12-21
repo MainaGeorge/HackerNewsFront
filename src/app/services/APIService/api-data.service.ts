@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {  Observable } from 'rxjs';
-import  { environment } from 'src/environments/environment';
-import { IApiComment, IApiStory } from './Api.models';
+import { environment } from './../../../environments/environment';
+import { IApiComment as HNComment, HNStory } from './Api.models';
 import {map} from 'rxjs/operators'
 
 @Injectable({
@@ -10,20 +10,20 @@ import {map} from 'rxjs/operators'
 })
 export class ApiDataService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  public getTopStories(url: string, numberOfStories:number):Observable<number[]>{
+  getTopStoryIds(url: string, numberOfStories: number): Observable<number[]>{
       return this.http.get<number[]>(`${url}`).pipe(
-        map((resultingArray) => resultingArray.slice(0,numberOfStories+1))
+        map((resultingArray) => resultingArray.slice(0, numberOfStories))
       );
   }
 
-  public getStoryById(id:number){
-    return this.http.get<IApiStory>(`${environment.itemUrl}/${id}.json`);
+  getStory(id: number): Observable<HNStory> {
+    return this.http.get<HNStory>(`${environment.BASE_ITEM_URL}/${id}.json`);
   }
 
-  public getCommentById(id:number):Observable<IApiComment>{
-    return this.http.get<IApiComment>(`${environment.itemUrl}/${id}.json`);
+  getComment(id: number): Observable<HNComment>{
+    return this.http.get<HNComment>(`${environment.BASE_ITEM_URL}/${id}.json`);
   }
 
 }
