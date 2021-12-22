@@ -6,7 +6,7 @@ export interface ICoreStory extends IBaseInterface {
   title: string;
   totalPoints: number;
   selfUrl: string;
-  comments?: ICoreComment[]
+  comments: ICoreComment[]
 
 }
 

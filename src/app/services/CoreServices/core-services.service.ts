@@ -9,9 +9,10 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class CoreServicesService {
+export class CoreServices {
 
   constructor(private apiService: ApiDataService) { }
+
   private mapApiCommentToCoreComment(apiComment:IApiComment):ICoreComment{
     const coreComment:ICoreComment = {
       id: apiComment.id,
@@ -19,9 +20,9 @@ export class CoreServicesService {
       date: new Date(apiComment.time),
       message: apiComment.text
     }
-
     return coreComment;
   }
+
   private mapApiStoryToCoreStory(apisStory:IApiStory):ICoreStory{
     const coreStory: ICoreStory = {
       id: apisStory.id,
@@ -29,9 +30,9 @@ export class CoreServicesService {
       date: new Date(apisStory.time),
       title: apisStory.title,
       totalPoints: apisStory.score,
-      selfUrl: apisStory.url
+      selfUrl: apisStory.url,
+      comments: new Array<ICoreComment>()
     }
-
     return coreStory
   }
 
@@ -55,7 +56,7 @@ export class CoreServicesService {
                const coreComment = this.mapApiCommentToCoreComment(apiComment);
               comments.push(coreComment);
              }, error => console.log(error), () => {
-              comments.sort((a,b) => b.id - a.id).slice(0);
+              comments.sort((a,b) => b.id - a.id);
               coreStory.comments = comments.slice(0,5);
               // console.log(comments.slice(0,5))
              });
