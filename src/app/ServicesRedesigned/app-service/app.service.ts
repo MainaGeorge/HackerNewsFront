@@ -11,8 +11,8 @@ import { HNStoryWithHNComments } from "../backend-service/HNStoryWithHNComments"
 export interface IAppService {
   getStory(id: number):Observable<HNStory>;
   getTopStoryIds(numberOfStories: number):Observable<number>;
-  getComment(id: number): Observable<HNComment>;
   getComments(commentIds:number[]):Observable<HNComment>[];
+  getStoryWithComments(id:number): Observable<HNStoryWithHNComments>;
 }
 
 @Injectable({
@@ -34,10 +34,6 @@ export class AppService implements IAppService{
     );
   }
 
-  getComment(id: number): Observable<HNComment> {
-    return this.hnBackendService.getComment(id);
-  }
-
   getStories(numberOfStories: number):Observable<HNStoryWithHNComments>{
     return this.getTopStoryIds(numberOfStories).pipe(
       mergeMap(id => this.getStoryWithComments(id)),
@@ -46,7 +42,7 @@ export class AppService implements IAppService{
 
   getComments(commentIds:number[]):Observable<HNComment>[]{
     const comments:Array<Observable<HNComment>> = [];
-    commentIds.map(id => comments.push(this.getComment(id)));
+    commentIds.map(id => comments.push(this.hnBackendService.getComment(id)));
     return comments;
   }
 

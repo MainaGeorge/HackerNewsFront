@@ -34,10 +34,5 @@ export class HNBackendService {
   getComment(id: number):Observable<HNComment>{
     return this.httpClient.get<HNComment>(`${environment.BASE_ITEM_URL}/${id}.json`);
   }
-
-  getComments(commentIds:number[]):Observable<HNComment>[]{
-    const comments:Array<Observable<HNComment>> = [];
-    commentIds.map(id => comments.push(this.getComment(id)));
-    return comments;
-  }
+  
 }
