@@ -15,6 +15,6 @@ export interface IBaseInterface {
   id: number;
   time: number;
   type: string;
-  kids?: number[];
+  kids: number[];
 
 }
