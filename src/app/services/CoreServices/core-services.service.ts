@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import { ApiDataService } from '../APIService/api-data.service';
-import { IApiComment, IApiStory } from '../APIService/Api.models';
+import { IApiComment, HNStory } from '../APIService/Api.models';
 import { ICoreComment, ICoreStory } from './core.models';
 import { environment } from 'src/environments/environment';
 
@@ -24,7 +24,6 @@ export class CoreServices {
     return coreComment;
   }
 
-  private mapApiStoryToCoreStory(apisStory:IApiStory):ICoreStory{
     const coreStory: ICoreStory = {
       id: apisStory.id,
       authorName: apisStory.by,
@@ -38,7 +37,7 @@ export class CoreServices {
   }
 
   public getCommentById(commentId:number):Observable<ICoreComment>{
-     return this.apiService.getCommentById(commentId).pipe(
+     return this.apiService.getComment(commentId).pipe(
        map(apiComment => {
          const coreComment = this.mapApiCommentToCoreComment(apiComment);
          return coreComment;
@@ -46,13 +45,7 @@ export class CoreServices {
      )
   }
 
-  getCommentsTest(storyId:number){
-    return this.getStoryTest(storyId).pipe()
-  }
 
-  getStoryTest(storyId:number){
-    return this.apiService.getStoryById(storyId);
-  }
 
   // public getStory(storyId:number):Observable<ICoreStory>{
   //   return this.apiService.getStoryById(storyId).pipe(

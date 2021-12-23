@@ -1,37 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {  forkJoin, from, Observable, of } from 'rxjs';
-import  { environment } from 'src/environments/environment';
-import { IApiComment, IApiStory } from './Api.models';
-import { map, mergeMap, tap} from 'rxjs/operators'
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiDataService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  public getTopStories(url: string, numberOfStories:number):Observable<number[]>{
+  getTopStoryIds(url: string, numberOfStories: number): Observable<number[]>{
       return this.http.get<number[]>(`${url}`).pipe(
-        map((resultingArray) => resultingArray.slice(0,numberOfStories+1))
+        map((resultingArray) => resultingArray.slice(0, numberOfStories))
       );
   }
 
-  public getStoryById(id:number){
-    return this.http.get<IApiStory>(`${environment.BASE_ITEM_URL}/${id}.json`).pipe(
-      map(story => {
-        if(story.kids){
-          story.kids = story.kids.sort((a, b) => b-a).slice(0,5);
-        }
-        return story;
-      })
-    );
-  }
 
-  public getCommentById(id:number):Observable<IApiComment>{
-    return this.http.get<IApiComment>(`${environment.BASE_ITEM_URL}/${id}.json`);
-  }
 
   getStoriesTest(){
     return this.http.get<number[]>(`${environment.bestStoriesUrl}`).pipe(

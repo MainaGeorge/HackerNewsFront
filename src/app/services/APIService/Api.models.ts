@@ -1,4 +1,4 @@
-export interface IApiStory extends IBaseInterface{
+export interface HNStory extends IBaseInterface{
   descendants: number;
   score: number;
   title: string;
