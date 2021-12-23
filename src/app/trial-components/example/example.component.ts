@@ -25,7 +25,9 @@ export class ExampleComponent implements OnInit {
 
       this.stories.push(appStory);
 
-    }, error => console.log(error))
+    }, error => console.log(error));
+
+    this.appService.getStoryWithComments(29627105).subscribe()
 
   }
 

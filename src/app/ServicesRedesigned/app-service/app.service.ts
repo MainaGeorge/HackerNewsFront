@@ -40,12 +40,7 @@ export class AppService implements IAppService{
 
   getStories(numberOfStories: number):Observable<HNStoryWithHNComments>{
     return this.getTopStoryIds(numberOfStories).pipe(
-      mergeMap(id => {
-        const story$ = this.getStory(id);
-        const comments$ = this.getStory(id).pipe(concatMap(story => forkJoin(this.getComments(story.kids))))
-        return forkJoin({story: story$, comments:comments$})
-      }),
-      tap(res => console.log(res))
+      mergeMap(id => this.getStoryWithComments(id)),
     )
   }
 
@@ -53,6 +48,14 @@ export class AppService implements IAppService{
     const comments:Array<Observable<HNComment>> = [];
     commentIds.map(id => comments.push(this.getComment(id)));
     return comments;
+  }
+
+  getStoryWithComments(id:number): Observable<HNStoryWithHNComments>{
+    const story$ = this.getStory(id);
+    const comments$ = this.getStory(id).pipe(concatMap(story => forkJoin(this.getComments(story.kids))))
+    return forkJoin({story: story$, comments:comments$}).pipe(
+      tap(result => console.log(result))
+    )
   }
 
 }
