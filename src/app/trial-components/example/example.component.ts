@@ -1,12 +1,9 @@
-import { JsonpClientBackend } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { from, of } from 'rxjs';
-import { delay, map, mergeMap } from 'rxjs/operators';
-import { ApiDataService } from 'src/app/services/APIService/api-data.service';
-import { IApiStory } from 'src/app/services/APIService/Api.models';
-import { CoreServices } from 'src/app/services/CoreServices/core-services.service';
-import { Story } from 'src/app/services/CoreServices/core.models';
+import { AppComment } from 'src/app/ServicesRedesigned/app-service/app.comment.model';
+import { AppStory } from 'src/app/ServicesRedesigned/app-service/app.story.model';
 import { AppService } from 'src/app/ServicesRedesigned/app-service/app.service';
+import { HNComment } from 'src/app/ServicesRedesigned/backend-service/backend.hncomment.model';
+import { HNStory } from 'src/app/ServicesRedesigned/backend-service/backend.hnstory.model';
 
 @Component({
   selector: 'app-example',
@@ -14,19 +11,32 @@ import { AppService } from 'src/app/ServicesRedesigned/app-service/app.service';
   styleUrls: ['./example.component.css']
 })
 export class ExampleComponent implements OnInit {
-  stories: Array<Story> = []
+  stories: Array<AppStory> = []
   constructor(private appService:AppService) { }
 
 
   ngOnInit(): void {
-    this.appService.getTopStoryIds(10).subscribe(result => console.log(result), error => console.log(error));
+    this.appService.getStories(3).subscribe(stories => {
+      const hnStory = stories.story;
+      const hNComments = stories.comments;
+      const appComments: AppComment[] = []
+      hNComments.forEach(hnComment => appComments.push(this.constructAppComment(hnComment)));
+      const appStory = this.constructAppStory(hnStory, appComments);
+
+      this.stories.push(appStory);
+
+    }, error => console.log(error))
+
   }
 
 
-  // private constructStory(story:IApiStory){
-  //   const retrieved = new Story(story.title, story.score, story.url, story.by, new Date(story.time),story.id);
-  //   console.log(`${retrieved.title} by ${retrieved.authorName} on ${retrieved.date.toLocaleDateString()}`);
-  //   this.stories.push(retrieved);
-  // }
+  private constructAppComment(comment:HNComment):AppComment{
+    const appComment = new AppComment(comment.id, comment.text, comment.by, new Date(comment.time));
+    return appComment;
+  }
+
+  private constructAppStory(story:HNStory, comment:AppComment[]){
+   return new AppStory(story.id, story.title, story.by, new Date(story.time), comment, story.score, story.url, story.kids)
+  }
 
 }

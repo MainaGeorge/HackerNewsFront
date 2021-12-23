@@ -6,3 +6,5 @@ export interface HNStory extends HNBaseItem{
   title: string;
   url: string;
 }
+
+

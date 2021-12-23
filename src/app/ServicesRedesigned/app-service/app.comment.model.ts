@@ -1,7 +1,8 @@
-export class Comment{
+
+export class AppComment {
   constructor(
     public id: number,
     public message: string,
     public authorName: string,
-    public date: number) {}
+    public date: Date) { }
 }

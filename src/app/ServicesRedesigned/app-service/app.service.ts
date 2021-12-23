@@ -1,16 +1,19 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, from, Observable, of } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { forkJoin, Observable, of } from 'rxjs';
+import { concatMap, mergeMap, tap } from 'rxjs/operators';
 import { HNBackendService } from '../backend-service/backend.HN.service';
 import { HNComment } from '../backend-service/backend.hncomment.model';
 import { HNStory } from '../backend-service/backend.hnstory.model';
+import { HNStoryWithHNComments } from "../backend-service/HNStoryWithHNComments";
+
+
 
 export interface IAppService {
-  getStory(id: number): Observable<HNStory>;
+  getStory(id: number):Observable<HNStory>;
   getTopStoryIds(numberOfStories: number):Observable<number>;
   getComment(id: number): Observable<HNComment>;
+  getComments(commentIds:number[]):Observable<HNComment>[];
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +22,8 @@ export class AppService implements IAppService{
 
   constructor(private hnBackendService: HNBackendService) { }
 
-
-  getStory(id: number): Observable<HNStory> {
-    return this.hnBackendService.getStory(id)
+  getStory(id: number):Observable<HNStory>{
+    return this.hnBackendService.getStory(id);
   }
 
   getTopStoryIds(numberOfStories: number):Observable<number> {
@@ -35,4 +37,22 @@ export class AppService implements IAppService{
   getComment(id: number): Observable<HNComment> {
     return this.hnBackendService.getComment(id);
   }
+
+  getStories(numberOfStories: number):Observable<HNStoryWithHNComments>{
+    return this.getTopStoryIds(numberOfStories).pipe(
+      mergeMap(id => {
+        const story$ = this.getStory(id);
+        const comments$ = this.getStory(id).pipe(concatMap(story => forkJoin(this.getComments(story.kids))))
+        return forkJoin({story: story$, comments:comments$})
+      }),
+      tap(res => console.log(res))
+    )
+  }
+
+  getComments(commentIds:number[]):Observable<HNComment>[]{
+    const comments:Array<Observable<HNComment>> = [];
+    commentIds.map(id => comments.push(this.getComment(id)));
+    return comments;
+  }
+
 }
