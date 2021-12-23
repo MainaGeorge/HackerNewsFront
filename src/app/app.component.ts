@@ -18,23 +18,21 @@ export class AppComponent implements OnInit{
 
   ngOnInit(): void {
 
-    this.coreService.getStory(8863)
-    .subscribe(story => {
-      this.corestory = story;
-      console.log(story.comments);
-      console.log(this.corestory.comments)
-    }, error => console.log(error))
+    // this.coreService.getStory(8863)
+    // .subscribe(story => {
+    //   this.corestory = story;
+    // }, error => console.log(error))
 
-    this.coreService.getTop5NewStories("new",1)
-    .subscribe(stories => {
-      this.topStories = stories;
-    }, error => console.log(error));
+    // this.coreService.getTop5NewStories("new",1)
+    // .subscribe(stories => {
+    //   this.topStories = stories;
+    // }, error => console.log(error));
 
-    this.coreService.getTop5NewStories("top",2)
-    .subscribe(stories => this.bestStories = stories, error => console.log(error));
+    // this.coreService.getTop5NewStories("top",2)
+    // .subscribe(stories => this.bestStories = stories, error => console.log(error));
 
-    this.coreService.getCommentById(8873)
-    .subscribe(comment => this.apiComment= comment, error => console.log(error));
+    // this.coreService.getCommentById(8873)
+    // .subscribe(comment => this.apiComment= comment, error => console.log(error));
 
   }
 }

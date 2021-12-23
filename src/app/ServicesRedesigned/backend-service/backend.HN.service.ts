@@ -13,7 +13,7 @@ export class HNBackendService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getStoryIds(numberOfStories:number):Observable<number[]{
+  getStoryIds(numberOfStories:number):Observable<number[]>{
     return this.httpClient.get<number[]>(`${environment.topStoriesUrl}`).pipe(
       map((resultingArray) => resultingArray.slice(0, numberOfStories))
     );
