@@ -1,1 +1,55 @@
-<p>story works!</p>
+<ng-container *ngIf="story">
+<div class="container mt-5 mb-5">
+  <div class="d-flex justify-content-center row">
+    <div class="d-flex flex-column col-md-8">
+      <div class="d-flex flex-row align-items-center text-left comment-top p-2 bg-white border-bottom px-4">
+        <div class="profile-image"><img class="rounded-circle"
+               src="https://cdn3.iconfinder.com/data/icons/avatars-round-flat/33/avat-01-512.png"
+               width="70"></div>
+        <div class="d-flex flex-column-reverse flex-grow-0 align-items-center votings ml-1">
+        </div>
+        <div class="d-flex flex-column ml-3">
+          <div class="d-flex flex-row post-title">
+            <h5>{{ story.title }}</h5><span class="ml-2">({{ story.authorName }})</span>
+          </div>
+          <div class="d-flex flex-row align-items-center align-content-center post-title">
+            <span class="mr-2 comments">{{ story?.commentsIds?.length}} comments&nbsp;</span>
+            <span class="mr-2 dot"></span>
+            <span class="mr-2">{{ story.date.toDateString() }}</span>
+            <span class="mr-2 dot"></span>
+            <span><a class="comments" (click)="displayComments()"> {{showComments ? 'hide comments' : 'show all comments'}}</a></span>
+          </div>
+        </div>
+      </div>
+      <div class="coment-bottom bg-white p-2 px-4">
+        <div class="d-flex flex-row add-comment-section mt-4 mb-4">
+          <input type="text"
+                  [(ngModel)]="commentToBeAdded"
+                 class="form-control mr-3"
+                 placeholder="Add comment">
+
+                <button class="btn btn-primary"
+                  (click)="addComment()"
+                  type="button">Comment
+                </button>
+        </div>
+        <ng-container *ngIf="showComments && comments && comments.length > 0">
+          <div class="commented-section mt-2" *ngFor="let comment of comments">
+            <div class="d-flex flex-row align-items-center commented-user">
+              <h5 class="mr-2">{{comment.authorName}}</h5><span class="dot mb-1"></span>
+              <span class="mb-1 ml-2">{{comment.date.toDateString()}}</span>
+            </div>
+            <div class="comment-text-sm"><span>{{comment.message}}</span>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+</ng-container>
+
+
+
