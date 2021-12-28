@@ -6,9 +6,8 @@ export class AppStory{
         public title: string,
         public authorName: string,
         public date: Date,
-        public comments: AppComment[],
         public totalPoints: number,
         public selfUrl: string,
-        public commentsId: number[]){}
+        public commentsIds: number[]){}
 
 }

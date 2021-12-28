@@ -1,6 +1,10 @@
-import { HNBaseItem } from "./backend.hnbase-item.model";
 
-export interface HNComment extends HNBaseItem{
+export interface HNComment {
     parent: number;
-    text: string;
+  text: string;
+  by: string;
+  id: number;
+  time: number;
+  type: string;
+  kids: number[]
 }

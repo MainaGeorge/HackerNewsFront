@@ -1,1 +1,15 @@
-<p>example works!</p>
+<div class="container">
+  <div *ngFor="let story of appStories" class="card"
+       style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">{{story.title}}</h5>
+      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.
+      </p>
+      <a class="btn btn-primary"
+        (click)="getComments(story.commentsIds)">comments</a>
+         <div class="" *ngIf="appComments.length > 0">
+           <p *ngFor="let comment of appComments">{{ comment.message }}</p>
+         </div>
+    </div>
+  </div>
+</div>

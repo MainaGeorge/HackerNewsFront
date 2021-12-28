@@ -1,37 +1,51 @@
 import { Injectable } from '@angular/core';
-import { Observable} from 'rxjs';
-import { mergeMap, concatMap} from 'rxjs/operators';
-import { HNBackendService } from '../backend-service/backend.HN.service';
+import { forkJoin, from, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
+import { HNStoryApiService } from '../backend-service/backend.HN.service';
 import { HNComment } from '../backend-service/backend.hncomment.model';
+import { HNStory } from '../backend-service/backend.hnstory.model';
 import { HNStoryWithHNComments } from "../backend-service/HNStoryWithHNComments";
+import { AppComment } from './app.comment.model';
+import { AppStory } from './app.story.model';
 
 export interface IAppService {
-  getComments(commentIds: number[]): Observable<HNComment>[];
-  getStoryWithComment(id: number): Observable<HNStoryWithHNComments>
-  getStories(numberOfStories: number):Observable<HNStoryWithHNComments>
+  getStories(numberOfStories: number): Observable<HNStory[]>;
+  getComments(ids: number[]): Observable<HNComment[]>;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppService implements IAppService{
+export class AppStoryService implements IAppService{
 
-  constructor(private hnBackendService: HNBackendService) { }
+  constructor(private hnBackendService: HNStoryApiService) { }
 
-
-  getStories(numberOfStories: number):Observable<HNStoryWithHNComments>{
+  getStories(numberOfStories: number) {
     return this.hnBackendService.getTopStoryIds(numberOfStories).pipe(
-      mergeMap(id => this.getStoryWithComment(id)),
-    )
+      mergeMap(ids => {
+        const stories$: Observable<HNStory>[] = [];
+        ids.forEach(id => stories$.push(this.hnBackendService.getStory(id)));
+
+        return forkJoin(stories$);
+      }
+    ))
   }
 
-  getComments(ids:number[]):Observable<HNComment>[]{
-    return this.hnBackendService.getComments(ids);
+  getComments(ids:number[]):Observable<HNComment[]>{
+    const comments: Array<Observable<HNComment>> = [];
+
+    ids.map(id => comments.push(this.hnBackendService.getComment(id)));
+    return forkJoin(comments);
   }
 
 
-  getStoryWithComment(id: number): Observable<HNStoryWithHNComments>{
-    return this.hnBackendService.getStoryWithComment(id);
+  mapToAppComment(comment:HNComment):AppComment{
+    return new AppComment(comment.id, comment.text, comment.by, new Date(comment.time));
+
+  }
+
+  mapToAppStory(story:HNStory){
+   return new AppStory(story.id, story.title, story.by, new Date(story.time), story.score, story.url, story.kids)
   }
 
 }

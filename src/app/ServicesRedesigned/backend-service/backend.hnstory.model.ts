@@ -1,10 +1,14 @@
-import { HNBaseItem } from "./backend.hnbase-item.model";
 
-export interface HNStory extends HNBaseItem{
+export interface HNStory {
   descendants: number;
   score: number;
   title: string;
   url: string;
+  by: string;
+  id: number;
+  time: number;
+  type: string;
+  kids: number[]
 }
 
 

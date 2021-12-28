@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AppComment } from 'src/app/ServicesRedesigned/app-service/app.comment.model';
 import { AppStory } from 'src/app/ServicesRedesigned/app-service/app.story.model';
-import { AppService } from 'src/app/ServicesRedesigned/app-service/app.service';
-import { HNComment } from 'src/app/ServicesRedesigned/backend-service/backend.hncomment.model';
-import { HNStory } from 'src/app/ServicesRedesigned/backend-service/backend.hnstory.model';
-import { HNBackendService } from 'src/app/ServicesRedesigned/backend-service/backend.HN.service';
+import { AppStoryService } from 'src/app/ServicesRedesigned/app-service/app.service';
+import { AppComment } from 'src/app/ServicesRedesigned/app-service/app.comment.model';
 
 @Component({
   selector: 'app-example',
@@ -12,33 +9,33 @@ import { HNBackendService } from 'src/app/ServicesRedesigned/backend-service/bac
   styleUrls: ['./example.component.css']
 })
 export class ExampleComponent implements OnInit {
-  stories: Array<AppStory> = []
-  constructor(private appService:AppService, private backend:HNBackendService) { }
+  appStories: Array<AppStory> = []
+  appComments: Array<AppComment> = []
+  constructor(private appService:AppStoryService) { }
 
 
   ngOnInit(): void {
-    // this.appService.getStories(5).subscribe(stories => {
-    //   const hnStory = stories.story;
-    //   const hNComments = stories.comments;
-    //   const appComments: AppComment[] = []
-    //   hNComments.forEach(hnComment => appComments.push(this.constructAppComment(hnComment)));
-    //   const appStory = this.constructAppStory(hnStory, appComments);
+    this.appService.getStories(5).subscribe(stories => {
+      console.log(stories)
+      stories.forEach(story => {
+        const appStory = this.appService.mapToAppStory(story);
 
-    //   this.stories.push(appStory);
+        this.appStories.push(appStory);
+      })
+    }, error => console.log(error))
 
-    // }, error => console.log(error));
+  }
 
-    this.backend.getStoryWithComment(8863).subscribe(ans => console.log(ans));
+  getComments(ids: number[]) {
+    this.appService.getComments(ids).subscribe(comments => {
+      console.log(comments)
+      const appComments:Array<AppComment> = [];
+      comments.forEach(comment => appComments.push(this.appService.mapToAppComment(comment)))
+      this.appComments = appComments;
+    })
   }
 
 
-  private constructAppComment(comment:HNComment):AppComment{
-    const appComment = new AppComment(comment.id, comment.text, comment.by, new Date(comment.time));
-    return appComment;
-  }
 
-  private constructAppStory(story:HNStory, comment:AppComment[]){
-   return new AppStory(story.id, story.title, story.by, new Date(story.time), comment, story.score, story.url, story.kids)
-  }
 
 }
