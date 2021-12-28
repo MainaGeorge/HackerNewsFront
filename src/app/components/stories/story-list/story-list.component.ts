@@ -13,7 +13,7 @@ export class StoryListComponent implements OnInit {
   constructor(private appStoryService: AppStoryService) { }
 
   ngOnInit(): void {
-    this.appStoryService.getStories(5).subscribe({
+    this.appStoryService.getStories(3).subscribe({
       next: stories => {
         this.stories = stories;
      }, error: err => console.log(err) });

@@ -1,21 +1,42 @@
-.story {
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
-  margin: 1rem auto;
-  max-width: 70rem;
+body {
+    background-color: #eee
 }
 
-.comment{
-  margin-bottom: 2px;
+.bdge {
+    height: 21px;
+    background-color: orange;
+    color: #fff;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 4px;
+    line-height: 3px
 }
 
-.title {
-  display: block;
-  text-decoration: none;
-  margin-bottom: 2px;
+.comments {
+    text-decoration: underline;
+    text-underline-position: under;
+    cursor: pointer
 }
 
-button {
-  display: block;
+.dot {
+    height: 7px;
+    width: 7px;
+    margin-top: 3px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block
 }
+
+.hit-voting:hover {
+    color: blue
+}
+
+.hit-voting {
+    cursor: pointer
+}
+
+
+.comments
+ {
+   cursor: pointer;
+ }
