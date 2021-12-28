@@ -1,0 +1,21 @@
+.story {
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  margin: 1rem auto;
+  max-width: 70rem;
+}
+
+.comment{
+  margin-bottom: 2px;
+}
+
+.title {
+  display: block;
+  text-decoration: none;
+  margin-bottom: 2px;
+}
+
+button {
+  display: block;
+}

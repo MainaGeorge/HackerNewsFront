@@ -1,1 +1,13 @@
-<p>story works!</p>
+<div class="story">
+<a [href]="story.selfUrl" target="_blank" class="title">{{ story.title }}</a>
+<button (click)="getComments()"
+        class="btn btn-primary">show comments</button>
+<ng-container *ngIf="showComments && comments && comments.length > 0">
+<div>
+  <p *ngFor="let comment of comments"
+     class="comment"> {{ comment.message }}</p>
+</div>
+</ng-container>
+
+</div>
+

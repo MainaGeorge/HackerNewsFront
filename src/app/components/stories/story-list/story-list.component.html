@@ -1,1 +1,8 @@
-<p>story-list works!</p>
+<ng-container *ngIf="stories && stories.length > 0 ">
+<div *ngFor="let story of stories">
+  <app-story [story]="story"
+   [commentsIds]="story.commentsIds">
+  </app-story>
+</div>
+</ng-container>
+
