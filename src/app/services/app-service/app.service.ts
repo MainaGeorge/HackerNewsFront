@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, from, Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
 import { HNStoryApiService } from '../backend-service/backend.HN.service';
 import { HNComment } from '../backend-service/backend.hncomment.model';
 import { HNStory } from '../backend-service/backend.hnstory.model';
-import { HNStoryWithHNComments } from "../backend-service/HNStoryWithHNComments";
 import { AppComment } from './app.comment.model';
 import { AppStory } from './app.story.model';
 
-export interface IAppService {
+export interface IAppStoryService {
   getStories(numberOfStories: number): Observable<HNStory[]>;
   getComments(ids: number[]): Observable<HNComment[]>;
 }
@@ -16,7 +15,7 @@ export interface IAppService {
 @Injectable({
   providedIn: 'root'
 })
-export class AppStoryService implements IAppService{
+export class AppStoryService implements IAppStoryService{
 
   constructor(private hnBackendService: HNStoryApiService) { }
 
