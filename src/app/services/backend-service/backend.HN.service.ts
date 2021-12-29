@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { map} from 'rxjs/operators';
+import { map, filter} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HNComment } from './backend.hncomment.model';
 import { HNStory} from './backend.hnstory.model';
@@ -14,8 +14,11 @@ export class HNStoryApiService{
   constructor(private httpClient: HttpClient) { }
 
   getTopStoryIds(numberOfStories:number):Observable<number[]>{
-    return this.httpClient.get<number[]>(`${environment.bestStoriesUrl}`).pipe(
+    return this.httpClient.get<number[]>(`${environment.topStoriesUrl}`).pipe(
+
+      //use top results as returned no need to sort the stories
       map((resultingArray) => resultingArray.slice(0, numberOfStories)),
+
     );
   }
 
@@ -25,7 +28,8 @@ export class HNStoryApiService{
       map(story => {
         if (story.kids) {
           //take the most recent 5 comments
-          const topFiveComments = story.kids.sort((a,b) => b-a).slice(0,numberOfComments);
+          const topFiveComments = story.kids.sort((a, b) => b - a).slice(0, numberOfComments);
+
           story.kids = topFiveComments;
         }
         return story;

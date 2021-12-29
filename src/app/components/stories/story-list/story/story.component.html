@@ -4,7 +4,7 @@
    (click)="activateComments()">
     <div class="story-container">
       <div class="content">
-        <div><b>{{ story.authorName }} | {{ story.date.toDateString()}}</b></div>
+        <div><b>{{ story.authorName }} | {{ story.date | transformDate }}</b></div>
         <div>{{ story.title }}</div>
       </div>
       <div class="content"><a target="_blank" [href]="story.selfUrl">link</a></div>

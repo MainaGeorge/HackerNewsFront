@@ -44,6 +44,8 @@ export class AppStoryService implements IAppStoryService {
 
     const comments: Array<Observable<Comment>> = [];
 
+    if (!ids ) return forkJoin(comments);
+
     ids.forEach(id => {
       const hnComment$ = this.hnBackendService.getComment(id);
       const appComment$ = this.mapToAppComment(hnComment$);
@@ -64,14 +66,14 @@ export class AppStoryService implements IAppStoryService {
 
   private mapToAppComment(comment:Observable<HNComment>):Observable<Comment>{
     return comment.pipe(
-      map(comment => new Comment(comment.id, comment.text, comment.by, new Date(comment.time)))
+      map(comment => new Comment(comment.id, comment.text, comment.by, new Date(comment.time * 1000)))
     );
 
   }
 
   private mapToAppStory(story: Observable<HNStory>): Observable<Story> {
     return story.pipe(
-      map((story => new Story(story.id, story.title, story.by, new Date(story.time), story.score, story.url, story.kids)))
+      map((story => new Story(story.id, story.title, story.by, new Date(story.time * 1000), story.score, story.url, story.kids)))
     );
   }
 

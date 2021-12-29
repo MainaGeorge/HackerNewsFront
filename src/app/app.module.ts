@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { CommentComponent } from './components/stories/story-list/comments/comment/comment.component';
 import { CommentsComponent } from './components/stories/story-list/comments/comments.component';
+import { TimePipe } from './pipes/timeTransform.pipe';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { CommentsComponent } from './components/stories/story-list/comments/comm
     StoryListComponent,
     StoryComponent,
     CommentComponent,
-    CommentsComponent
+    CommentsComponent,
+    TimePipe
   ],
   imports: [
     BrowserModule,
