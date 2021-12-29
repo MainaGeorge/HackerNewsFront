@@ -5,33 +5,18 @@
     <h2 class="title">Stories</h2>
     <ng-container *ngIf="stories$">
       <div *ngFor="let story of stories$ | async">
-        <app-story [story]="story"
-                  [commentsIds]="story.commentsIds">
-        </app-story>
+        <app-story [story]="story"></app-story>
       </div>
     </ng-container>
   </div>
   <div class="comments">
-    <h2 class="title">Comments</h2>
-    <div class="comment">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima animi ipsum, nobis possimus voluptatum rem provident
-      molestias velit explicabo dolorem. Voluptate corrupti voluptas repellendus. Facere nam fugit in sit et.
-      Facilis quo voluptas alias sint magnam, debitis autem ab adipisci aliquam? Suscipit recusandae quam, cumque adipisci
-      perferendis, voluptas officia dolore veritatis rerum! Aliquam laudantium deserunt non deleniti minus rem sint eaque
-      iure! Cumque ducimus nesciunt autem minus at, quia voluptatem suscipit laboriosam deleniti repellendus.
-    </div>
-    <div class="comment">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima animi ipsum, nobis possimus voluptatum rem provident
-      molestias velit explicabo dolorem. Voluptate corrupti voluptas repellendus. Facere nam fugit in sit et.
-      Facilis quo voluptas alias sint magnam, debitis autem ab adipisci aliquam? Suscipit recusandae quam, cumque adipisci
-      quaerat unde at pariatur dignissimos animi harum ex magni, nam nisi, fuga repellendus accusantium?
-    </div>
-    <div class="comment">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima animi ipsum, nobis possimus voluptatum rem provident
-      molestias velit explicabo dolorem. Voluptate corrupti voluptas repellendus. Facere nam fugit in sit et.
-      Facilis quo voluptas alias sint magnam, debitis autem ab adipisci aliquam? Suscipit recusandae quam, cumque adipisci
-      quaerat unde at pariatur dignissimos animi harum ex magni, nam nisi, fuga repellendus accusantium?
-    </div>
+  <h2 class="title">Comments</h2>
+  <ng-container *ngIf="stories$ | async as current">
+    <app-comments [commentsIds]="current[0].commentsIds"></app-comments>
+  </ng-container>
+  <div></div>
+
+
   </div>
 </div>
 

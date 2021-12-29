@@ -23,39 +23,20 @@
 display: flex;
 flex-direction: column;
 flex-basis: 50%;
-padding: 8px;
+padding: 2px;
 margin: 4px;
-font-size: 18px;
+/* font-size: 18px; */
 border-radius: 8px;
 
 }
-
-
 
 .comments {
 display: flex;
 flex-direction: column;
 flex-basis: 50%;
-padding: 8px;
+padding: 2px;
 margin: 4px;
-}
-
-.story , .comment{
-  background: #e9edc9;
-  margin: 2px;
-  padding: 4px;
-  border-radius: 8px;
-}
-
-.selected-story{
-  color: blue;
-  font-size: larger;
-  background: #ccd5ae;
-}
-
-.comment {
-  background: yellow;
-  border-radius: 8px;
+/* font-size: 18px; */
 }
 
 
