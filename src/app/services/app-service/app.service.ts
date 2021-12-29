@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 import { HNStoryApiService } from '../backend-service/backend.HN.service';
 import { HNComment } from '../backend-service/backend.hncomment.model';
@@ -16,6 +16,11 @@ export interface IAppStoryService {
   providedIn: 'root'
 })
 export class AppStoryService implements IAppStoryService {
+
+
+  emittedComments$ = new Subject<Observable<Comment[]>>();
+  selectedStoryId$ = new Subject<number>();
+
 
   constructor(private hnBackendService: HNStoryApiService) { }
 
@@ -48,7 +53,14 @@ export class AppStoryService implements IAppStoryService {
     return forkJoin(comments);
   }
 
+  emitSelectedStoryId(id: number) {
+    this.selectedStoryId$.next(id);
+  }
 
+
+  public fetchComments(ids: number[]) {
+    this.emittedComments$.next(this.getComments(ids))
+  }
 
   private mapToAppComment(comment:Observable<HNComment>):Observable<Comment>{
     return comment.pipe(

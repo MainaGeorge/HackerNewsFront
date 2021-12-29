@@ -3,6 +3,7 @@
   margin: 2px;
   padding: 4px;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .selected-story{

@@ -1,4 +1,4 @@
-<ng-container *ngIf="comments">
+<ng-container *ngIf="comments$ | async as comments">
   <ng-container *ngFor="let comment of comments">
     <app-comment [comment]="comment"></app-comment>
   </ng-container>

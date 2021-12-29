@@ -14,38 +14,17 @@ export class StoryComponent implements OnInit {
   story!: Story;
 
   @Input()
-  commentsIds!: Array<number>;
-  showComments = false;
-
-  commentToBeAdded = '';
-
-  comments: Array<Comment> = [];
+  isSelected!: boolean;
 
   constructor(private appStoryService: AppStoryService) { }
 
   ngOnInit(): void {
   }
 
-  getComments() {
-    this.appStoryService.getComments(this.commentsIds).subscribe(comments => {
-      this.comments = comments;
-    },
-        err => console.log(err))
+  activateComments() {
+    this.appStoryService.fetchComments(this.story.commentsIds);
+    this.appStoryService.emitSelectedStoryId(this.story.id);
   }
 
-  displayComments() {
-    this.showComments = !this.showComments;
-    if (this.comments.length < 1) {
-      this.getComments();
-    }
-  }
-
-  addComment() {
-    if (!this.commentToBeAdded) return;
-    const comment = new Comment(this.commentsIds[0] + 1, this.commentToBeAdded, 'new author', new Date());
-
-    this.comments.unshift(comment);
-    this.commentToBeAdded = '';
-  }
 
 }

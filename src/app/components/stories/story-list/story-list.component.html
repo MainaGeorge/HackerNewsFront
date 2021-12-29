@@ -5,14 +5,14 @@
     <h2 class="title">Stories</h2>
     <ng-container *ngIf="stories$">
       <div *ngFor="let story of stories$ | async">
-        <app-story [story]="story"></app-story>
+        <app-story [story]="story" [isSelected]="story.id === highlightedStoryId"></app-story>
       </div>
     </ng-container>
   </div>
   <div class="comments">
   <h2 class="title">Comments</h2>
-  <ng-container *ngIf="stories$ | async as current">
-    <app-comments [commentsIds]="current[0].commentsIds"></app-comments>
+  <ng-container>
+    <app-comments></app-comments>
   </ng-container>
   <div></div>
 
