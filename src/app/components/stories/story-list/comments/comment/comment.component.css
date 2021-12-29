@@ -4,3 +4,7 @@
   padding: 4px;
   border-radius: 8px;
 }
+
+.comment:hover {
+    background-color: #fefae0
+  }

@@ -1,7 +1,7 @@
 <ng-container *ngIf="comment">
     <div class="comment">
-      <div><b>{{ comment.authorName }}| {{ comment.date.toDateString() }}</b></div>
-      <div [innerText]="comment.message"></div>
+      <div><b>{{ comment.authorName }} | {{ comment.date.toDateString() }}</b></div>
+      <div [innerHtml]="comment.message"></div>
     </div>
 </ng-container>
 
