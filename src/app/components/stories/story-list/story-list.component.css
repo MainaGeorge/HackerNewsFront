@@ -30,15 +30,7 @@ border-radius: 8px;
 
 }
 
-.story-container{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.story-container .content {
-  padding: 6px;
-}
 
 .comments {
 display: flex;

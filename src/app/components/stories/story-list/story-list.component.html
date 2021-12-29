@@ -1,41 +1,15 @@
-<!-- <ng-container *ngIf="stories$">
-<div *ngFor="let story of stories$ | async">
-  <app-story [story]="story"
-   [commentsIds]="story.commentsIds">
-  </app-story>
-</div>
-</ng-container> -->
+
 <h2 class="title">Hacker News</h2>
 <div class="main-container">
   <div class="stories">
     <h2 class="title">Stories</h2>
-    <div class="story selected-story">
-      <div class="story-container">
-        <div class="content">
-          <div>Username | Time</div>
-          <div>story title</div>
-        </div>
-        <div class="content"><a>link</a></div>
+    <ng-container *ngIf="stories$">
+      <div *ngFor="let story of stories$ | async">
+        <app-story [story]="story"
+                  [commentsIds]="story.commentsIds">
+        </app-story>
       </div>
-    </div>
-    <div class="story">
-      <div class="story-container">
-        <div class="content">
-          <div>Username | Time</div>
-          <div>story title</div>
-        </div>
-        <div class="content"><a>link</a></div>
-      </div>
-    </div>
-    <div class="story">
-      <div class="story-container">
-        <div class="content">
-          <div>Username | Time</div>
-          <div>story title</div>
-        </div>
-        <div class="content"><a>link</a></div>
-      </div>
-    </div>
+    </ng-container>
   </div>
   <div class="comments">
     <h2 class="title">Comments</h2>

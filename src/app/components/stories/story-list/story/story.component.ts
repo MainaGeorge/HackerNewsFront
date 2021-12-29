@@ -24,7 +24,6 @@ export class StoryComponent implements OnInit {
   constructor(private appStoryService: AppStoryService) { }
 
   ngOnInit(): void {
-    this.getComments();
   }
 
   getComments() {

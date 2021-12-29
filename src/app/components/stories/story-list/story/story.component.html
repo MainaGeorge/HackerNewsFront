@@ -1,0 +1,12 @@
+
+<ng-container *ngIf="story">
+  <div class="story">
+    <div class="story-container">
+      <div class="content">
+        <div><b>{{ story.authorName }}</b> | {{ story.date.toDateString()}}</div>
+        <div>{{ story.title }}</div>
+      </div>
+      <div class="content"><a target="_blank" [href]="story.selfUrl">link</a></div>
+    </div>
+  </div>
+</ng-container>

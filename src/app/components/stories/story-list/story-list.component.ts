@@ -11,7 +11,7 @@ import { Story } from 'src/app/services/app-service/app.story.model';
 export class StoryListComponent implements OnInit {
 
   stories$!: Observable<Story[]>;
-  private readonly TOTAL_STORIES = 3;
+  private readonly TOTAL_STORIES = 7;
   constructor(private appStoryService: AppStoryService) { }
 
   ngOnInit(): void {

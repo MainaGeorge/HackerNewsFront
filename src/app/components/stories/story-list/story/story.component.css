@@ -1,42 +1,22 @@
-body {
-    background-color: #eee
+.story {
+  background: #e9edc9;
+  margin: 2px;
+  padding: 4px;
+  border-radius: 8px;
 }
 
-.bdge {
-    height: 21px;
-    background-color: orange;
-    color: #fff;
-    font-size: 11px;
-    padding: 8px;
-    border-radius: 4px;
-    line-height: 3px
+.selected-story{
+  color: blue;
+  font-size: larger;
+  background: #ccd5ae;
 }
 
-.comments {
-    text-decoration: underline;
-    text-underline-position: under;
-    cursor: pointer
+.story-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.dot {
-    height: 7px;
-    width: 7px;
-    margin-top: 3px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block
+.story-container .content {
+  padding: 6px;
 }
-
-.hit-voting:hover {
-    color: blue
-}
-
-.hit-voting {
-    cursor: pointer
-}
-
-
-.comments
- {
-   cursor: pointer;
- }
