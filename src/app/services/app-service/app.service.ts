@@ -4,12 +4,12 @@ import { map, mergeMap } from 'rxjs/operators';
 import { HNStoryApiService } from '../backend-service/backend.HN.service';
 import { HNComment } from '../backend-service/backend.hncomment.model';
 import { HNStory } from '../backend-service/backend.hnstory.model';
-import { AppComment } from './app.comment.model';
-import { AppStory } from './app.story.model';
+import { Comment } from './app.comment.model';
+import { Story } from './app.story.model';
 
 export interface IAppStoryService {
-  getStories(numberOfStories: number): Observable<AppStory[]>;
-  getComments(ids: number[]): Observable<AppComment[]>;
+  getStories(numberOfStories: number): Observable<Story[]>;
+  getComments(ids: number[]): Observable<Comment[]>;
 }
 
 @Injectable({
@@ -19,10 +19,10 @@ export class AppStoryService implements IAppStoryService {
 
   constructor(private hnBackendService: HNStoryApiService) { }
 
-  getStories(numberOfStories: number) :Observable<AppStory[]>{
+  getStories(numberOfStories: number) :Observable<Story[]>{
     return this.hnBackendService.getTopStoryIds(numberOfStories).pipe(
       mergeMap(ids => {
-        const stories$: Observable<AppStory>[] = [];
+        const stories$: Observable<Story>[] = [];
         ids.forEach(id => {
           const hnStory$ = this.hnBackendService.getStory(id);
           const appStory$ = this.mapToAppStory(hnStory$);
@@ -35,9 +35,9 @@ export class AppStoryService implements IAppStoryService {
       ))
   }
 
-  getComments(ids: number[]): Observable<AppComment[]> {
+  getComments(ids: number[]): Observable<Comment[]> {
 
-    const comments: Array<Observable<AppComment>> = [];
+    const comments: Array<Observable<Comment>> = [];
 
     ids.forEach(id => {
       const hnComment$ = this.hnBackendService.getComment(id);
@@ -50,16 +50,16 @@ export class AppStoryService implements IAppStoryService {
 
 
 
-  private mapToAppComment(comment:Observable<HNComment>):Observable<AppComment>{
+  private mapToAppComment(comment:Observable<HNComment>):Observable<Comment>{
     return comment.pipe(
-      map(comment => new AppComment(comment.id, comment.text, comment.by, new Date(comment.time)))
+      map(comment => new Comment(comment.id, comment.text, comment.by, new Date(comment.time)))
     );
 
   }
 
-  private mapToAppStory(story: Observable<HNStory>): Observable<AppStory> {
+  private mapToAppStory(story: Observable<HNStory>): Observable<Story> {
     return story.pipe(
-      map((story => new AppStory(story.id, story.title, story.by, new Date(story.time), story.score, story.url, story.kids)))
+      map((story => new Story(story.id, story.title, story.by, new Date(story.time), story.score, story.url, story.kids)))
     );
   }
 

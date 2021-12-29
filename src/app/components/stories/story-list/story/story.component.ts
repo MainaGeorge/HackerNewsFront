@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppComment } from 'src/app/services/app-service/app.comment.model';
+import { Comment } from 'src/app/services/app-service/app.comment.model';
 import { AppStoryService } from 'src/app/services/app-service/app.service';
-import { AppStory } from 'src/app/services/app-service/app.story.model';
+import { Story } from 'src/app/services/app-service/app.story.model';
 
 @Component({
   selector: 'app-story',
@@ -11,7 +11,7 @@ import { AppStory } from 'src/app/services/app-service/app.story.model';
 export class StoryComponent implements OnInit {
 
   @Input()
-  story!: AppStory;
+  story!: Story;
 
   @Input()
   commentsIds!: Array<number>;
@@ -19,7 +19,7 @@ export class StoryComponent implements OnInit {
 
   commentToBeAdded = '';
 
-  comments: Array<AppComment> = [];
+  comments: Array<Comment> = [];
 
   constructor(private appStoryService: AppStoryService) { }
 
@@ -43,7 +43,7 @@ export class StoryComponent implements OnInit {
 
   addComment() {
     if (!this.commentToBeAdded) return;
-    const comment = new AppComment(this.commentsIds[0] + 1, this.commentToBeAdded, 'new author', new Date());
+    const comment = new Comment(this.commentsIds[0] + 1, this.commentToBeAdded, 'new author', new Date());
 
     this.comments.unshift(comment);
     this.commentToBeAdded = '';

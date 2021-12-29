@@ -1,5 +1,5 @@
-<ng-container *ngIf="stories && stories.length > 0 ">
-<div *ngFor="let story of stories">
+<ng-container *ngIf="stories$">
+<div *ngFor="let story of stories$ | async">
   <app-story [story]="story"
    [commentsIds]="story.commentsIds">
   </app-story>

@@ -1,6 +1,6 @@
-import { AppComment } from "./app.comment.model";
+import { Comment } from "./app.comment.model";
 
-export class AppStory{
+export class Story{
   constructor(
         public id: number,
         public title: string,
