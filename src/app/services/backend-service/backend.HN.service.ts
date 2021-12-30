@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable} from 'rxjs';
-import { map, filter} from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { HNComment } from './backend.hncomment.model';
 import { HNStory} from './backend.hnstory.model';
@@ -13,8 +13,16 @@ export class HNStoryApiService{
 
   constructor(private httpClient: HttpClient) { }
 
-  getTopStoryIds(numberOfStories:number):Observable<number[]>{
-    return this.httpClient.get<number[]>(`${environment.bestStoriesUrl}`).pipe(
+  getTopStoryIds(storyKind:string, numberOfStories: number): Observable<number[]>{
+    let url: string;
+    storyKind = storyKind.toLocaleLowerCase();
+
+    url = storyKind === 'new' ? environment.newStories
+        : storyKind === 'top'
+        ? environment.topStoriesUrl
+        : environment.bestStoriesUrl;
+
+    return this.httpClient.get<number[]>(`${url}`).pipe(
       map((resultingArray) => resultingArray.slice(0, numberOfStories))
     );
   }

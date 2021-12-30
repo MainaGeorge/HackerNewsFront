@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, EMPTY, forkJoin, Observable, Subject } from 'rxjs';
-import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
+import { filter, map, mergeMap } from 'rxjs/operators';
 import { HNStoryApiService } from '../backend-service/backend.HN.service';
 import { Comment } from './app.comment.model';
 import { Story } from './app.story.model';
 
 export interface IAppStoryService {
-  getStories(numberOfStories: number): Observable<Story[]>;
+  getStories(storyKind:string, numberOfStories: number): Observable<Story[]>;
   getComments(ids: number[]): Observable<Comment[]>;
 }
 
@@ -24,8 +24,8 @@ export class AppStoryService implements IAppStoryService {
 
   constructor(private hnBackendService: HNStoryApiService) { }
 
-  getStories(numberOfStories: number) :Observable<Story[]>{
-    return this.hnBackendService.getTopStoryIds(numberOfStories)
+  getStories(storyKind:string,numberOfStories: number) :Observable<Story[]>{
+    return this.hnBackendService.getTopStoryIds(storyKind, numberOfStories)
       .pipe(
         mergeMap(ids => {
           const stories$: Observable<Story>[] = [];

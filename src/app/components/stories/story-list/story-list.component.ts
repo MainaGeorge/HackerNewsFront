@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { AppStoryService } from 'src/app/services/app-service/app.service';
 import { Story } from 'src/app/services/app-service/app.story.model';
 
@@ -11,13 +10,14 @@ import { Story } from 'src/app/services/app-service/app.story.model';
 })
 export class StoryListComponent {
   private readonly TOTAL_STORIES = 5;
+  private readonly STORY_KIND = 'best';
 
   stories$!: Observable<Story[]>;
   highlightedStory$: Observable<Story>;
 
   constructor(private appStoryService: AppStoryService) {
     this.highlightedStory$ = this.appStoryService.targetStory$;
-    this.stories$ = this.appStoryService.getStories(this.TOTAL_STORIES);
+    this.stories$ = this.appStoryService.getStories(this.STORY_KIND, this.TOTAL_STORIES);
   }
 
 }
