@@ -5,7 +5,7 @@
     <h2 class="title">Stories</h2>
     <ng-container *ngIf="stories$">
       <div *ngFor="let story of stories$ | async">
-        <app-story [story]="story" [isSelected]="story.id === highlightedStoryId"></app-story>
+        <app-story [story]="story" [isSelected]="story.id === (highlightedStory$ | async)?.id"></app-story>
       </div>
     </ng-container>
   </div>

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Comment } from 'src/app/services/app-service/app.comment.model';
 import { AppStoryService } from 'src/app/services/app-service/app.service';
 
@@ -8,21 +8,13 @@ import { AppStoryService } from 'src/app/services/app-service/app.service';
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.css']
 })
-export class CommentsComponent implements OnInit, OnDestroy{
+export class CommentsComponent{
 
 
-  commentsSubscription!: Subscription;
-  comments$!: Observable<Comment[]>;
-  constructor(public appService: AppStoryService) { }
+  comments$: Observable<Comment[]>;
 
-
-  ngOnInit(): void {
-     this.commentsSubscription = this.appService.emittedComments$.subscribe(res => this.comments$ = res);
+  constructor(public appService: AppStoryService) {
+    this.comments$ = this.appService.targeStoryComments$;
   }
+}
 
-  ngOnDestroy(): void {
-    this.commentsSubscription.unsubscribe();
-  }
-
-
-  }

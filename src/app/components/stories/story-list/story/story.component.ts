@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Comment } from 'src/app/services/app-service/app.comment.model';
 import { AppStoryService } from 'src/app/services/app-service/app.service';
 import { Story } from 'src/app/services/app-service/app.story.model';
 
@@ -21,9 +20,8 @@ export class StoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  activateComments() {
-    this.appStoryService.fetchComments(this.story.commentsIds);
-    this.appStoryService.emitSelectedStoryId(this.story.id);
+  onStorySelected():void {
+    this.appStoryService.setTargetStory(this.story);
   }
 
 

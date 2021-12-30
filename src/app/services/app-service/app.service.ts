@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable, Subject } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, forkJoin, Observable, Subject } from 'rxjs';
+import { filter, map, mergeMap, take, tap } from 'rxjs/operators';
 import { HNStoryApiService } from '../backend-service/backend.HN.service';
-import { HNComment } from '../backend-service/backend.hncomment.model';
-import { HNStory } from '../backend-service/backend.hnstory.model';
 import { Comment } from './app.comment.model';
 import { Story } from './app.story.model';
 
@@ -17,64 +15,50 @@ export interface IAppStoryService {
 })
 export class AppStoryService implements IAppStoryService {
 
+  private requestedComments$ = new BehaviorSubject<Comment[]>([]);
+  private selectedStory$ = new Subject<Story>();
 
-  emittedComments$ = new Subject<Observable<Comment[]>>();
-  selectedStoryId$ = new Subject<number>();
-
+  currentStory!: Story;
+  targeStoryComments$ = this.requestedComments$.asObservable();
+  targetStory$ = this.selectedStory$.asObservable();
 
   constructor(private hnBackendService: HNStoryApiService) { }
 
   getStories(numberOfStories: number) :Observable<Story[]>{
-    return this.hnBackendService.getTopStoryIds(numberOfStories).pipe(
-      mergeMap(ids => {
-        const stories$: Observable<Story>[] = [];
-        ids.forEach(id => {
-          const hnStory$ = this.hnBackendService.getStory(id);
-          const appStory$ = this.mapToAppStory(hnStory$);
+    return this.hnBackendService.getTopStoryIds(numberOfStories)
+      .pipe(
+        mergeMap(ids => {
+          const stories$: Observable<Story>[] = [];
+          ids?.forEach(id => {
+            stories$.push(this.hnBackendService.getStory(id)
+              .pipe(
+                filter(story => story.type === 'story'),
+                map((story => new Story(story.id, story.title, story.by,
+                          new Date(story.time * 1000), story.score, story.url, story.descendants, story.kids)))))
+            });
+          return forkJoin(stories$);
+        })
+      )
 
-          stories$.push(appStory$)
-        });
-
-        return forkJoin(stories$);
-      }
-      ))
   }
 
   getComments(ids: number[]): Observable<Comment[]> {
-
     const comments: Array<Observable<Comment>> = [];
 
-    if (!ids ) return forkJoin(comments);
-
-    ids.forEach(id => {
-      const hnComment$ = this.hnBackendService.getComment(id);
-      const appComment$ = this.mapToAppComment(hnComment$);
-      comments.push(appComment$);
-
+    ids?.forEach(id => {
+      comments.push(this.hnBackendService.getComment(id).pipe(
+        map(comment => new Comment(comment.id, comment.text, comment.by, new Date(comment.time * 1000)))));
     })
     return forkJoin(comments);
   }
 
-  emitSelectedStoryId(id: number) {
-    this.selectedStoryId$.next(id);
-  }
+  setTargetStory(story: Story) {
+    this.currentStory = story;
+    this.selectedStory$.next(story);
 
-
-  public fetchComments(ids: number[]) {
-    this.emittedComments$.next(this.getComments(ids))
-  }
-
-  private mapToAppComment(comment:Observable<HNComment>):Observable<Comment>{
-    return comment.pipe(
-      map(comment => new Comment(comment.id, comment.text, comment.by, new Date(comment.time * 1000)))
-    );
-
-  }
-
-  private mapToAppStory(story: Observable<HNStory>): Observable<Story> {
-    return story.pipe(
-      map((story => new Story(story.id, story.title, story.by, new Date(story.time * 1000), story.score, story.url, story.kids)))
-    );
+    //set the comments for the selected story
+    this.getComments(story.commentsIds).subscribe(comments => this.requestedComments$.next(comments),
+      error => console.log(error));
   }
 
 }

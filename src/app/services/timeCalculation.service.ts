@@ -6,14 +6,14 @@ export class TimeCalculations{
 
   constructor() { }
 
-   minutesInMilliseconds = 1000 * 60;
-   hoursInMilliseconds = this.minutesInMilliseconds * 60;
-   dayInMilliseconds = this.hoursInMilliseconds * 24;
-   weekInMillisecond = this.dayInMilliseconds * 7;
-   monthInMilliseconds = this.weekInMillisecond * 4;
-   yearInMilliseconds = this.monthInMilliseconds * 12;
+   private minutesInMilliseconds = 1000 * 60;
+   private hoursInMilliseconds = this.minutesInMilliseconds * 60;
+   private dayInMilliseconds = this.hoursInMilliseconds * 24;
+   private weekInMillisecond = this.dayInMilliseconds * 7;
+   private monthInMilliseconds = this.weekInMillisecond * 4;
+   private yearInMilliseconds = this.monthInMilliseconds * 12;
 
-  constructHowLongAgo(date: Date) : string{
+  toHowLongAgo(date: Date) : string{
     const todaysDate = new Date();
     const timeDifferenceInMilliseconds = todaysDate.getTime() - date.getTime();
 
@@ -41,6 +41,6 @@ export class TimeCalculations{
       return `${Math.floor(timeDifferenceInMilliseconds / this.minutesInMilliseconds)} minutes ago`;
     }
 
-    return `${timeDifferenceInMilliseconds/1000} seconds ago`
+    return `${Math.floor(timeDifferenceInMilliseconds/1000)} seconds ago`
   }
 }

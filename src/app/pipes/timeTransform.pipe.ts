@@ -6,7 +6,7 @@ import { TimeCalculations } from "../services/timeCalculation.service";
 export class TimePipe implements PipeTransform{
 
   transform(value: Date) {
-      return this.timeCalculationService.constructHowLongAgo(value);
+      return this.timeCalculationService.toHowLongAgo(value);
   }
 
 

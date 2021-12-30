@@ -1,7 +1,7 @@
 
 <ng-container *ngIf="story">
-  <div class="story" [ngClass]="{'selected-story': isSelected}"
-   (click)="activateComments()">
+  <div class="story" [ngClass]="{'story-selected': isSelected}"
+   (click)="onStorySelected()">
     <div class="story-container">
       <div class="content">
         <div><b>{{ story.authorName }} | {{ story.date | transformDate }}</b></div>

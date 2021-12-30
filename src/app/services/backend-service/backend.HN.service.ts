@@ -14,11 +14,8 @@ export class HNStoryApiService{
   constructor(private httpClient: HttpClient) { }
 
   getTopStoryIds(numberOfStories:number):Observable<number[]>{
-    return this.httpClient.get<number[]>(`${environment.topStoriesUrl}`).pipe(
-
-      //use top results as returned no need to sort the stories
-      map((resultingArray) => resultingArray.slice(0, numberOfStories)),
-
+    return this.httpClient.get<number[]>(`${environment.bestStoriesUrl}`).pipe(
+      map((resultingArray) => resultingArray.slice(0, numberOfStories))
     );
   }
 
@@ -26,13 +23,11 @@ export class HNStoryApiService{
   getStory(id:number, numberOfComments=5):Observable<HNStory>{
     return this.httpClient.get<HNStory>(`${environment.BASE_ITEM_URL}/${id}.json`).pipe(
       map(story => {
+        let topFiveCommentsIds:number[] = []
         if (story.kids) {
-          //take the most recent 5 comments
-          const topFiveComments = story.kids.sort((a, b) => b - a).slice(0, numberOfComments);
-
-          story.kids = topFiveComments;
+          topFiveCommentsIds = story.kids.sort((a, b) => b - a).slice(0, numberOfComments);
         }
-        return story;
+        return { ...story, kids: topFiveCommentsIds };
       }),
     );
   }
