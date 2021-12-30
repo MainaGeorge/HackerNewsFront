@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Comment } from 'src/app/services/app-service/app.comment.model';
-import { AppStoryService } from 'src/app/services/app-service/app.service';
+import { StoryService } from 'src/app/services/app-service/app.service';
 
 @Component({
   selector: 'app-comments',
@@ -13,7 +13,7 @@ export class CommentsComponent{
 
   comments$: Observable<Comment[]>;
 
-  constructor(public appService: AppStoryService) {
+  constructor(public appService: StoryService) {
     this.comments$ = this.appService.targeStoryComments$;
   }
 }

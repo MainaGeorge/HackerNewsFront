@@ -5,7 +5,7 @@ import { HNStoryApiService } from '../backend-service/backend.HN.service';
 import { Comment } from './app.comment.model';
 import { Story } from './app.story.model';
 
-export interface IAppStoryService {
+export interface IStoryService {
   getStories(storyKind:string, numberOfStories: number): Observable<Story[]>;
   getComments(ids: number[]): Observable<Comment[]>;
 }
@@ -13,7 +13,7 @@ export interface IAppStoryService {
 @Injectable({
   providedIn: 'root'
 })
-export class AppStoryService implements IAppStoryService {
+export class StoryService implements IStoryService {
 
   private requestedComments$ = new BehaviorSubject<Comment[]>([]);
   private selectedStory$ = new Subject<Story>();

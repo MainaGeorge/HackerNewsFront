@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AppStoryService } from 'src/app/services/app-service/app.service';
+import { StoryService } from 'src/app/services/app-service/app.service';
 import { Story } from 'src/app/services/app-service/app.story.model';
 
 @Component({
@@ -15,7 +15,7 @@ export class StoryComponent implements OnInit {
   @Input()
   isSelected!: boolean;
 
-  constructor(private appStoryService: AppStoryService) { }
+  constructor(private appStoryService: StoryService) { }
 
   ngOnInit(): void {
   }

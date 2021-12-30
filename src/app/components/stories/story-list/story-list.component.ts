@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppStoryService } from 'src/app/services/app-service/app.service';
+import { StoryService } from 'src/app/services/app-service/app.service';
 import { Story } from 'src/app/services/app-service/app.story.model';
 
 @Component({
@@ -15,7 +15,7 @@ export class StoryListComponent {
   stories$!: Observable<Story[]>;
   highlightedStory$: Observable<Story>;
 
-  constructor(private appStoryService: AppStoryService) {
+  constructor(private appStoryService: StoryService) {
     this.highlightedStory$ = this.appStoryService.targetStory$;
     this.stories$ = this.appStoryService.getStories(this.STORY_KIND, this.TOTAL_STORIES);
   }
