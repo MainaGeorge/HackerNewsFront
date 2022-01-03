@@ -16,11 +16,14 @@ export interface IStoryService {
 export class StoryService implements IStoryService {
 
   private requestedComments$ = new BehaviorSubject<Comment[]>([]);
-  private selectedStory$ = new Subject<Story>();
+  private selectedStorySubject = new Subject<Story>();
 
   currentStory!: Story;
   targeStoryComments$ = this.requestedComments$.asObservable();
-  targetStory$ = this.selectedStory$.asObservable();
+
+  get targetStory$(): Observable<Story>{
+      return this.selectedStorySubject;
+  }
 
   constructor(private hnBackendService: HNStoryApiService) { }
 
@@ -54,7 +57,7 @@ export class StoryService implements IStoryService {
 
   setTargetStory(story: Story) {
     this.currentStory = story;
-    this.selectedStory$.next(story);
+    this.selectedStorySubject.next(story);
 
     //set the comments for the selected story
     this.getComments(story.commentsIds).subscribe(comments => this.requestedComments$.next(comments),

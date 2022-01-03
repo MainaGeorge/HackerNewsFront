@@ -5,8 +5,8 @@ import { StoryService } from 'src/app/services/app-service/app.service';
 
 @Component({
   selector: 'app-comments',
-  templateUrl: './comments.component.html',
-  styleUrls: ['./comments.component.css']
+  templateUrl: './comments-list.component.html',
+  styleUrls: ['./comments-list.component.css']
 })
 export class CommentsComponent{
 
