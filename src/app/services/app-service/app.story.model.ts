@@ -8,6 +8,7 @@ export class Story{
         public date: Date,
         public totalPoints: number,
         public selfUrl: string,
+        public totalComments: number,
         public commentsIds: number[]){}
 
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppStoryService } from 'src/app/services/app-service/app.service';
+import { StoryService } from 'src/app/services/app-service/app.service';
 import { Story } from 'src/app/services/app-service/app.story.model';
 
 @Component({
@@ -8,14 +8,16 @@ import { Story } from 'src/app/services/app-service/app.story.model';
   templateUrl: './story-list.component.html',
   styleUrls: ['./story-list.component.css']
 })
-export class StoryListComponent implements OnInit {
+export class StoryListComponent {
+  private readonly TOTAL_STORIES = 8;
+  private readonly STORY_KIND = 'best';
 
   stories$!: Observable<Story[]>;
-  private readonly TOTAL_STORIES = 3;
-  constructor(private appStoryService: AppStoryService) { }
+  highlightedStory$: Observable<Story>;
 
-  ngOnInit(): void {
-    this.stories$ = this.appStoryService.getStories(this.TOTAL_STORIES);
+  constructor(private appStoryService: StoryService) {
+    this.highlightedStory$ = this.appStoryService.targetStory$;
+    this.stories$ = this.appStoryService.getStories(this.STORY_KIND, this.TOTAL_STORIES);
   }
 
 }

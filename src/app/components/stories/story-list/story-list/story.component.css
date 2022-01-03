@@ -1,0 +1,28 @@
+.story {
+  background: #e9edc9;
+  margin: 2px;
+  padding: 4px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.story:hover{
+  background: #ccd5ae;
+}
+
+.story-selected, .story-selected.story:hover{
+  /* color: blue; */
+  font-size: larger;
+  background: yellowgreen;
+
+}
+
+.story-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.story-container .content {
+  padding: 6px;
+}
