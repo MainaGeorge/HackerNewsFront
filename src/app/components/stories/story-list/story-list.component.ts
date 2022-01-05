@@ -9,7 +9,7 @@ import { Story } from 'src/app/services/app-service/app.story.model';
   styleUrls: ['./story-list.component.css']
 })
 export class StoryListComponent {
-  private readonly TOTAL_STORIES = 8;
+  private readonly TOTAL_STORIES = 5;
   private readonly STORY_KIND = 'best';
 
   stories$!: Observable<Story[]>;

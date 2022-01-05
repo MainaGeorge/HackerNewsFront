@@ -2,12 +2,10 @@
 <ng-container *ngIf="story">
   <div class="story" [ngClass]="{'story-selected': isSelected}"
    (click)="onStorySelected()">
-    <div class="story-container">
       <div class="content">
         <div><b>{{ story.authorName }} | {{ story.date | transformDate }}</b></div>
         <div>{{ story.title }}</div>
       </div>
-      <div class="content"><a target="_blank" [href]="story.selfUrl">link</a></div>
+      <div class="link"><a target="_blank" [href]="story.selfUrl">link</a></div>
     </div>
-  </div>
 </ng-container>

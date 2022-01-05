@@ -1,28 +1,20 @@
+
 .story {
-  background: #e9edc9;
-  margin: 2px;
-  padding: 4px;
-  border-radius: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 5px;
   cursor: pointer;
+  background: #e9edc9;
+  border-radius: 8px;
 }
 
-.story:hover{
-  background: #ccd5ae;
+.link {
+  grid-column-start: -1;
+  align-self: center;
+  margin-right: 5px;
 }
 
 .story-selected, .story-selected.story:hover{
-  /* color: blue; */
   font-size: larger;
   background: yellowgreen;
-
-}
-
-.story-container{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.story-container .content {
-  padding: 6px;
 }

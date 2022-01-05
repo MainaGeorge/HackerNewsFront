@@ -37,7 +37,7 @@ export class StoryService implements IStoryService {
               .pipe(
                 filter(story => story.type === 'story'),
                 map((story => new Story(story.id, story.title, story.by,
-                          new Date(story.time * 1000), story.score, story.url, story.descendants, story.kids)))))
+                    new Date(story.time * 1000), story.score, story.url, story.descendants, story.kids)))))
             });
           return forkJoin(stories$);
         })

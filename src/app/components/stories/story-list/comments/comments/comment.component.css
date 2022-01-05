@@ -1,8 +1,20 @@
 .comment{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
   background: #faedcd;
-  margin: 4px;
-  padding: 4px;
   border-radius: 8px;
+  margin-bottom: 4px;
+}
+.author {
+  grid-row-start: 1
+}
+.content {
+  grid-row-start: -1;
+}
+
+.wrapper {
+  margin: 2px 10px;
 }
 
 .comment:hover {
